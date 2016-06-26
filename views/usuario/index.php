@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\bootstrap\Modal;
 use yii\helpers\Url;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\UsuarioSearch */
@@ -27,7 +28,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'data-pjax' => '0',
         ]); ?>
     </p>
+    <?php Pjax::begin() ?>
     <?= GridView::widget([
+        'id' => 'usuario-grid',
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
@@ -39,9 +42,25 @@ $this->params['breadcrumbs'][] = $this->title;
             'valoracionDeUsuario',
             'tipo',
 
-            ['class' => 'yii\grid\ActionColumn'],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'template' => '{view}{update}{delete}',
+                'buttons' => [
+                    'update' => function ($url, $model, $key) {
+                        return Html::a('<span class="glyphicon glyphicon-pencil"></span>', '#', [
+                            'id' => 'activity-index-link',
+                            'title' => Yii::t('app', 'Update'),
+                            'data-toggle' => 'modal',
+                            'data-target' => '#modal',
+                            'data-url' => Url::to(['update', 'id' => $model->email]),
+                            'data-pjax' => '0',
+                        ]);
+                    },
+                ]
+            ],
         ],
     ]); ?>
+    <?php Pjax::end() ?>
 
     <?php
     $this->registerJs(

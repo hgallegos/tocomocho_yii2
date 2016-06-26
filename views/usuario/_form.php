@@ -10,7 +10,15 @@ use yii\widgets\ActiveForm;
 
 <div class="usuario-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin([
+        'id' => 'usuario-form',
+        'enableAjaxValidation' => true,
+        'enableClientScript' => true,
+        'enableClientValidation' => true,
+    ]); ?>
+
+
+
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
@@ -27,5 +35,26 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
+
+    <?php
+    $this->registerJs('
+        $("form#usuario-form").on("beforeSubmit", function(e) {
+            var form = $(this);
+            $.post(
+                form.attr("action")+"&submit=true",
+                form.serialize()
+            )
+            .done(function(result) {
+                form.parent().html(result.message);
+                $.pjax.reload({container:"#usuario-grid"});
+            });
+            return false;
+        }).on("submit", function(e){
+            e.preventDefault();
+            e.stopImmediatePropagation();
+            return false;
+        });
+    ');
+    ?>
 
 </div>
