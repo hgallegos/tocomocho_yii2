@@ -38,6 +38,7 @@ use yii\widgets\ActiveForm;
 
     <?php
     $this->registerJs('
+    // obtener la id del formulario y establecer el manejador de eventos
         $("form#usuario-form").on("beforeSubmit", function(e) {
             var form = $(this);
             $.post(
