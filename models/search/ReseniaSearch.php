@@ -44,8 +44,6 @@ class ReseniaSearch extends Resenia
     {
         $query = Resenia::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -58,7 +56,6 @@ class ReseniaSearch extends Resenia
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'idComentario' => $this->idComentario,
             'fecha' => $this->fecha,

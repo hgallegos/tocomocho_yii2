@@ -43,8 +43,6 @@ class FallaSearch extends Falla
     {
         $query = Falla::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -57,7 +55,6 @@ class FallaSearch extends Falla
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'idFalla' => $this->idFalla,
             'costoReparacion' => $this->costoReparacion,

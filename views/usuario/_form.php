@@ -1,5 +1,4 @@
 <?php
-
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -10,15 +9,7 @@ use yii\widgets\ActiveForm;
 
 <div class="usuario-form">
 
-    <?php $form = ActiveForm::begin([
-        'id' => 'usuario-form',
-        'enableAjaxValidation' => true,
-        'enableClientScript' => true,
-        'enableClientValidation' => true,
-    ]); ?>
-
-
-
+    <?php $form = ActiveForm::begin(); ?>
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
 
@@ -30,32 +21,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'tipo')->textInput() ?>
 
-    <div class="form-group">
-        <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
-    </div>
+  
+	<?php if (!Yii::$app->request->isAjax){ ?>
+	  	<div class="form-group">
+	        <?= Html::submitButton($model->isNewRecord ? 'Crear' : 'Actualizar', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+	    </div>
+	<?php } ?>
 
     <?php ActiveForm::end(); ?>
-
-    <?php
-    $this->registerJs('
-    // obtener la id del formulario y establecer el manejador de eventos
-        $("form#usuario-form").on("beforeSubmit", function(e) {
-            var form = $(this);
-            $.post(
-                form.attr("action")+"&submit=true",
-                form.serialize()
-            )
-            .done(function(result) {
-                form.parent().html(result.message);
-                $.pjax.reload({container:"#usuario-grid"});
-            });
-            return false;
-        }).on("submit", function(e){
-            e.preventDefault();
-            e.stopImmediatePropagation();
-            return false;
-        });
-    ');
-    ?>
-
+    
 </div>

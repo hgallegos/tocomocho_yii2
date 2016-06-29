@@ -43,8 +43,6 @@ class NotificacionSearch extends Notificacion
     {
         $query = Notificacion::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -57,7 +55,6 @@ class NotificacionSearch extends Notificacion
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'idNotificacion' => $this->idNotificacion,
             'idVehiculo' => $this->idVehiculo,

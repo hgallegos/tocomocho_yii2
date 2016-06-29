@@ -43,8 +43,6 @@ class VehiculoSearch extends Vehiculo
     {
         $query = Vehiculo::find();
 
-        // add conditions that should always apply here
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -57,7 +55,6 @@ class VehiculoSearch extends Vehiculo
             return $dataProvider;
         }
 
-        // grid filtering conditions
         $query->andFilterWhere([
             'idVehiculo' => $this->idVehiculo,
             'anio' => $this->anio,
